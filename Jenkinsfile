@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t jenkins-html-test .'
+                    sh 'docker build -t djahongir/jenkins-html-test .'
                 }
             }
         }
@@ -17,7 +17,7 @@ pipeline {
                     sh 'docker rm -f jenkins-html-container || true'
                     
                     // Yangi container yaratamiz
-                    sh 'docker run -d -p 8000:80 --name jenkins-html-container jenkins-html-test'
+                    sh 'docker run -d -p 8000:80 --name jenkins-html-container djahongir/jenkins-html-test'
                 }
             }
         }
