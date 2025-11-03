@@ -13,10 +13,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    // Avval eski container bo‘lsa o‘chirib tashlaymiz
                     sh 'docker rm -f jenkins-html-container || true'
-
-                    // Yangi container yaratamiz
                     sh 'docker run -d -p 8000:80 --name jenkins-html-container djahongir/jenkins-html-test'
                 }
             }
@@ -25,7 +22,12 @@ pipeline {
         stage('Push Image to DockerHub') {
             steps {
                 script {
-                    sh 'docker push djahongir/jenkins-html-test'
+                    withCredentials([usernamePassword(credentialsId: 'hello', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh '''
+                            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                            docker push djahongir/jenkins-html-test
+                        '''
+                    }
                 }
             }
         }
