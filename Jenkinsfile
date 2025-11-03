@@ -9,34 +9,26 @@ pipeline {
                 }
             }
         }
-      }
+
         stage('Run Container') {
             steps {
                 script {
                     // Avval eski container bo‘lsa o‘chirib tashlaymiz
                     sh 'docker rm -f jenkins-html-container || true'
-                    
+
                     // Yangi container yaratamiz
                     sh 'docker run -d -p 8000:80 --name jenkins-html-container djahongir/jenkins-html-test'
                 }
             }
         }
 
-
-        stages {
-            stage('docker image push dockerhub') {
-                steps {
-                    script {
-                        sh 'docker push djahongir/jenkins-html-test'
+        stage('Push Image to DockerHub') {
+            steps {
+                script {
+                    sh 'docker push djahongir/jenkins-html-test'
                 }
             }
         }
-
-
-
-
-
-
     }
 
     post {
