@@ -9,7 +9,7 @@ pipeline {
                 }
             }
         }
-
+      }
         stage('Run Container') {
             steps {
                 script {
@@ -23,11 +23,11 @@ pipeline {
         }
 
 
-    stages {
-        stage('docker image push dockerhub') {
-            steps {
-                script {
-                    sh 'docker push djahongir/jenkins-html-test'
+        stages {
+            stage('docker image push dockerhub') {
+                steps {
+                    script {
+                        sh 'docker push djahongir/jenkins-html-test'
                 }
             }
         }
